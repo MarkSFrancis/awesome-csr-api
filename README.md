@@ -55,7 +55,17 @@ This repository sets out to demonstrate that there is a better way. It's time th
 
 We believe Cloudflare pages is the best way to host a CSR + API application.
 
-If you believe another cloud provider offers a better alternative, we encourage you to build a proof of concept with it and let us know!
+- Simple but effective git integration
+- Scale to zero
+- Very cheap hosting, with it being easy to set up a proof of concept to show your boss at work for free
+- Already a well-respected brand in the enterprise space, where many of the B2B apps that this repository is well-suited for are being created
+- Enough cloud offerings to cover most common web application's needs
+
+With that said, if you believe another cloud provider offers a better alternative, we encourage you to build a proof of concept with it and let us know!
+
+### Using NodeJS instead
+
+If "scale to zero" doesn't matter to you and you don't mind losing the ability to have preview environments that last forever, a simple NodeJS instance might be a better fit for you. A NodeJS server that runs tRPC for `/api` endpoints and static files for the rest gets a great deal of the same benefits as this repository does, but without the need for Cloudflare. If this sounds like a perfect fit for you, you might want to check out Vite's [middleware mode](https://vitejs.dev/config/server-options.html#server-middlewaremode) and the [tRPC Express adapter](https://trpc.io/docs/server/adapters/express).
 
 # Running on your local machine
 
