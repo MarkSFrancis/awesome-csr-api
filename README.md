@@ -96,7 +96,7 @@ You'll need:
 - A `tRPC` client
 - Something that emits static build output to `/dist`
 
-Luckily, that covers pretty much all the tools you've already been using for CSR. You can even use NextJS with a static `export` if you're crazy enough :P
+Most of CSR tools out there today already support both of these things. For example, you could use NextJS with [a static `export` configuration](https://nextjs.org/docs/pages/building-your-application/deploying/static-exports), though you'll need to override the output directory from `/out` to `/dist`.
 
 ## Extending the BE
 
@@ -106,9 +106,9 @@ This application largely has 3 modes:
 - Preview (deployments used by PR previews)
 - Dev (running locally on a dev machine)
 
-When creating your own resource, you'll need to start by deciding how you want to interact with it in each of these different modes. For example, if you're connecting to an [S3 bucket on AWS](https://aws.amazon.com/s3/), you might want a dev bucket, a preview bucket, and a production bucket. 
+When creating / connecting to your own resource(s), you'll need to start by deciding how you want to interact with it in each of these different modes. For example, if you're connecting to an [S3 bucket on AWS](https://aws.amazon.com/s3/), you might want a dev bucket, a preview bucket, and a production bucket. 
 
-This guide is not going to help you deploy / manage your custom resource(s), but we do recommend that you consider the 3 modes listed above when doing so. Instead, this guide will walk you through how to connect them to this project, and assumes you already know how to deploy / manage your resource(s). 
+This guide is not going to help you deploy / manage your custom resource(s), but we do recommend that you consider the 3 modes listed above when doing so. Instead, this guide will walk you through how to connect them to this project, and assumes you already know how to deploy / manage your custom resource(s). 
 
 ### Adding a Cloudflare resource
 
@@ -117,6 +117,8 @@ If what you need is already covered by Cloudflare's offerrings, that's great! Yo
 You can find a lot of Cloudflare's listed offerings, as well as how to add them to a `Pages` project in the [Bindings docs](https://developers.cloudflare.com/pages/functions/bindings/).
 
 For example, if you want a SQL database, you could use Cloudflare's [D1](https://developers.cloudflare.com/pages/functions/bindings/#d1-databases) offering.
+
+#### Example: Adding a Cloudflare D1 database
 
 1. Start by logging into Cloudflare with `npx wrangler login`
 1. Then, add your database with `npx wrangler d1 create prod-d1-tutorial`. Make sure to note down the database's ID
@@ -188,6 +190,8 @@ If you're using a database, you'll probably want a relevant [database driver](ht
 ### Interacting with an existing API / service
 
 The simplest way to interact with most APIs is to just use `fetch`.
+
+#### Example: Fetching data from a public API
 
 For example, if you're fetching a list of todos from a 3rd party API, you might write some code like this:
 
