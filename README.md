@@ -1,5 +1,7 @@
 # Awesome Client Side Rendering + API
 
+https://tanstack-router-poc.pages.dev/
+
 This repo demonstrates what we believe to be the best developer experience available today for React web apps that have a backend for frontend (BFF) API (an API that only exists to serve this particular web app), but do not need server-side rendering (SSR). Such web apps are usually those that require authentication to access any part of the site. Examples can include business to business (B2B) web apps, internal tools, or private data entry web apps (like a fitness tracker).
 
 # Why do we need this?
