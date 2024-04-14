@@ -378,6 +378,4 @@ Once you've got the resource(s) deploying, check out the [integration](#interact
 
 ### Hosting somewhere else
 
-This project is not cloud provider agnostic. If you wish to move off cloudflare, this project likely will not help much (beyond just a POC of what might be possible). We find that the setup will vary significantly from one provider to the next, and so we cannot offer much guidance for any other cloud providers.
-
-If you'd like to create a POC with your cloud provider, please feel free to fork this repository, but we are not currently open to being cloud provider agnostic.
+This project is not currently cloud provider agnostic. If you wish to move away from cloudflare, you might want to consider a basic [NodeJS deployment](#using-nodejs-instead).
