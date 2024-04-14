@@ -351,6 +351,10 @@ If you're accessing them from your FE, here's how to set it up:
      readonly VITE_OAUTH_URL: string;
    }
    ```
+1. You can now access the value anywhere in your FE via `import.meta.env`
+   ```tsx
+   export const SignIn = () => <a href={import.meta.env.VITE_OAUTH_URL}>Sign in</a>
+   ```
 
 1. If you want to know more about this, check out the [Vite mode docs](https://vitejs.dev/guide/env-and-mode)
 
