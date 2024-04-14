@@ -368,9 +368,9 @@ Because it is outside of Cloudflare, you'll need to set up your own CI/CD script
 
 That said, we do make the following recommendations:
 
-- Consider running a clean up for "preview" mode deployment's resource(s) when their PRs are merged. This avoids leaving lots of unnecessary infrastructure lying around
-- Make sure that "preview" deployments can be made in parallel. It's likely that multiple PRs will exist concurrently, so you'll need to support having multiple "preview" deployments running side-by-side
-- Consider the cost of "preview" deployments. If you can't scale to zero, you might want a much smaller version of your service than the production version (such as less RAM, less CPU, etc.)
+- Consider running a clean up for preview mode deployment's resource(s) when their PRs are merged. This avoids leaving lots of unnecessary infrastructure lying around
+- Make sure that preview mode deployments can be made in parallel. It's likely that multiple PRs will exist concurrently, so you'll need to support having multiple preview mode deployments running side-by-side
+- Consider the cost of preview mode deployments. If you can't scale to zero, you might want a much smaller version of your service than the production version (such as less RAM, less CPU, etc.)
 - Consider managing your custom resource(s) in a separate repository, with a single deployment each for development, preview, and production environments, particularly if it's not likely to need changes to it to be deployed at the same time as changes to this project
 - Keep the variables that Cloudflare will need consistent (e.g. all preview releases use the same variable values). If they're dynamic (e.g. they change on every PR deployment), you'll likely need to opt-out of Cloudflare's built-in `git` integration and use [wrangler deploy](https://developers.cloudflare.com/pages/get-started/direct-upload/#deploy-your-assets) instead, so that you can inject any generated values from your resource(s) into the Cloudflare `wrangler.toml` file before the app is deployed to Cloudflare
 
