@@ -378,4 +378,4 @@ Once you've got the resource(s) deploying, check out the [integration](#interact
 
 ### Hosting somewhere else
 
-This project is not currently cloud provider agnostic. If you wish to move away from cloudflare, you might want to consider a basic [NodeJS deployment](#using-nodejs-instead).
+This project is not currently cloud provider agnostic. If you wish to move away from cloudflare, you might want to consider [using NodeJS instead](#using-nodejs-instead).
