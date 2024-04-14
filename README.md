@@ -6,7 +6,7 @@ This repo demonstrates what we believe to be the best developer experience avail
 
 A large portion of development on the web does not benefit from SSR (such as no need for search engine optimisation (SEO), no need for HTTP streaming, etc). Client-side rendering (CSR) tooling has come on significantly since the inception of [vite](https://vitejs.dev/), but unfortunately the community still has no answer for connecting such a web app to an API, except by treating them as two separate entities.
 
-As such, many developers give up on CSR and end up building with SSR for no reason other than needing an API for their front-end (FE), without wanting the complexity of 2 deployments to manage. This makes hosting much more complex, wastes CPU on unnecessary renders (which, like all unnecessary energy expenditure, impacts the global climate), requires the developer to support rendering on both the server and the client, and worsens the DX when compared to CSR.
+As such, many developers give up on CSR and end up building with SSR for no reason other than needing an API for their front-end (FE), without wanting the complexity of 2 deployments to manage. This makes hosting much more complex, wastes CPU on unnecessary renders (which, like all unnecessary energy expenditure, impacts the global climate), requires the developer to support rendering on both the server and the client, and generally complicates the developer experience.
 
 This repository sets out to demonstrate that there is a better way. It's time that SSR once again became a tool that you only reach for when you truly need it.
 
