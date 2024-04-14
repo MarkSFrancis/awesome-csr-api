@@ -1,4 +1,4 @@
-import { publicProcedure, router } from "../trpc";
+import { procedure, router } from "../trpc";
 import { z } from "zod";
 
 let id = 0;
@@ -13,7 +13,7 @@ const db = {
 };
 
 export const postsRouter = router({
-  create: publicProcedure
+  create: procedure
     .input(z.object({ title: z.string() }))
     .mutation(({ input }) => {
       const post = {
@@ -23,7 +23,7 @@ export const postsRouter = router({
       db.posts.push(post);
       return post;
     }),
-  getAll: publicProcedure.query(async () => {
+  getAll: procedure.query(async () => {
     return db.posts;
   }),
 });

@@ -5,9 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --mode ${APP_MODE:-development}",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "kill-api": "fuser -k 8787/tcp"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.36.1",
