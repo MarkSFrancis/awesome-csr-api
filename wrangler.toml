@@ -17,5 +17,8 @@ port = 8787
 
 APP_NAME = 'CSR dev'
 
+[env.preview.vars]
+APP_NAME = 'CSR preview'
+
 [env.production.vars]
 APP_NAME = 'CSR production'
