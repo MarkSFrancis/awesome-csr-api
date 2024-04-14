@@ -36,6 +36,9 @@ This repository sets out to demonstrate that there is a better way. It's time th
 - OAuth
   - Check out the docs for your OAuth provider to find out how to add support for it.
   - We've provided a basic auth example which uses static authorization headers. Check out the code in `functions/api/_middleware.ts` (server-side) and `src/api/ApiProvider.tsx` (client-side)
+- Role-based access control (RBAC)
+  - Because `functions/api/_middleware.ts` can enrich the request context, you can add any extra information about the user you'd like (such as what roles they have). [Check out the Cloudflare middleware docs here](https://developers.cloudflare.com/pages/functions/middleware/)
+  - The exact implementation will depend on how granular your web app's permissions model is, we've left it as out-of-scope for this repository
 
 # Technologies we use
 
