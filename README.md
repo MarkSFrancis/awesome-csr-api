@@ -1,31 +1,33 @@
-# Awesome CSR + API
+# Awesome Client Side Rendering + API
 
-This repo is an attempt to create the best DX possible for React apps that have a BFF API (backend for frontend API - an API that only exists to serve this particular web app), but do not need SSR (server-side rendering). Such web apps are usually those that require authentication to access any part of the site. Examples can include B2B web apps, internal tools, or private data entry web apps.
+This repo demonstrates what we believe to be the best developer experience available today for React web apps that have a backend for frontend (BFF) API (an API that only exists to serve this particular web app), but do not need server-side rendering (SSR). Such web apps are usually those that require authentication to access any part of the site. Examples can include business to business (B2B) web apps, internal tools, or private data entry web apps (like a fitness tracker).
 
 # Why do we need this?
 
-A large portion of development on the web does not benefit from SSR (such as no need for SEO, no need for HTTP streaming, etc). CSR tooling has come on significantly since the inception of [vite](https://vitejs.dev/), but unfortunately the community still has no answer for connecting such an app to an API, except by treating them as two separate entities.
+A large portion of development on the web does not benefit from SSR (such as no need for search engine optimisation (SEO), no need for HTTP streaming, etc). Client-side rendering (CSR) tooling has come on significantly since the inception of [vite](https://vitejs.dev/), but unfortunately the community still has no answer for connecting such a web app to an API, except by treating them as two separate entities.
 
-As such, many developers give up on CSR and end up building with SSR for no reason other than needing an API for their FE, without wanting the complexity of 2 deployments to manage. This makes hosting much more complex, wastes CPU on unnecessary renders (which, like all unnecessary energy expenditure, impacts the global climate), requires the developer to support rendering on both the server and the client, and worsens the DX when compared to CSR.
+As such, many developers give up on CSR and end up building with SSR for no reason other than needing an API for their front-end (FE), without wanting the complexity of 2 deployments to manage. This makes hosting much more complex, wastes CPU on unnecessary renders (which, like all unnecessary energy expenditure, impacts the global climate), requires the developer to support rendering on both the server and the client, and worsens the DX when compared to CSR.
 
-This project is an attempt to fix this, by showing developers that there is a better way. Our objective is to create a DX so good that SSR becomes a tool that, once again, you will only reach for when you truly need it.
+This repository sets out to demonstrate that there is a better way. It's time that SSR once again became a tool that you only reach for when you truly need it.
 
-# Outcomes
+# What this repository offers
 
-- Typescript everwhere (though there are some exceptions for various config files, like `tailwind.config.js`)
-- End-to-end type safety, across the FE and BE. If you rename an API endpoint or change its schema, you'll get instant TS warnings in the front-end. You'll also get autocomplete for the API endpoint's body schema, available API endpoints, etc. You can even use your IDE's "Go to definition" when using an API endpoint from the FE, and it'll navigate to the API endpoint on the BE for you
+## Things you'd expect from a CSR app
+
 - Type-safe routing with autocomplete on any `Link`s
 - Hot module reload on local, bundled and minified in production
 - Lazy-loading, so if you have extremely complex payloads on certain routes, you can switch to lazy-loading for just those routes
-- Scale-to-zero, so that your API costs you nothing when you're not using it
 - Static hosting for free, so that if your users don't invoke your API, you'll incur no cost.
-  - You only pay for `/api` requests, and even then, the first 10,000,000 API requests each month are free on the $5 per month Standard plan, or 100,000 each month on the Free plan. [Check out the Cloudflare workers pricing here](https://developers.cloudflare.com/workers/platform/pricing/#workers)
-- Automatic CI/CD deployments, including automatic preview environments for PRs, which will never expire, at no additional cost
-- Authentication by default on all API endpoints. You're probably using CSR to protect non-public data, so authentication is treated as a first-class citizen here
-- Access to a cloud provider's full infrastructure offering for advanced scenarios, such as SQL databases, custom queues, key-value stores, and more, with Typescript support for interacting with all those custom resources
-- Authentication to all API endpoints. For this demo, that auth header is just hard-coded to "Example auth header"
-- Easy to add custom metrics / insights to (via [Cloudflare's analytics engine](https://developers.cloudflare.com/pages/functions/bindings/#analytics-engine))
 - Proper fallback to `/index.html` when no files / routes are found
+
+## Especially for CSR + API
+
+- End-to-end type safety, across the FE and BE. If you rename an API endpoint or change its schema, you'll get instant TS warnings in the front-end. You'll also get autocomplete for the API endpoint's body schema, available API endpoints, etc. You can even use your IDE's "Go to definition" when using an API endpoint from the FE, and it'll navigate to the API endpoint on the BE for you
+- You only pay for `/api` requests, and even then, the first 10,000,000 API requests each month are free on the $5 per month Standard plan, or 100,000 each month on the Free plan. [Check out the Cloudflare workers pricing here](https://developers.cloudflare.com/workers/platform/pricing/#workers)
+- Automatic CI/CD deployments, including automatic preview environments for PRs, which will never expire, at no additional cost
+- Authentication by default on all API endpoints. You're probably using CSR to protect non-public data, so authentication is treated as a first-class citizen
+- Access to a cloud provider's full resource offerings for advanced scenarios, such as SQL databases, custom queues, key-value stores, and more, with Typescript support for interacting with all those custom resources
+- Easy to add custom metrics / insights to (via [Cloudflare's analytics engine](https://developers.cloudflare.com/pages/functions/bindings/#analytics-engine))
 
 ## Things that aren't included here
 
@@ -52,13 +54,14 @@ We believe Cloudflare pages is the best way to host a CSR + API application.
 
 If you believe another cloud provider offers a better alternative, we encourage you to build a proof of concept with it and let us know!
 
-# Running on your local
+# Running on your local machine
 
 ## Prerequisites:
 
 - Git
 - NodeJS
-- A Cloudflare account (only required if you want to deploy to your own site)
+
+## Steps
 
 1. Clone the project onto your local machine
 1. Open a shell at the root of the project and run `npm i`
@@ -68,6 +71,15 @@ If you believe another cloud provider offers a better alternative, we encourage 
 # Deploying to Cloudflare
 
 1. Push to `main`. That's it!
+
+## Setting up deployment
+
+If you want to deploy from your own repository (or to your own Cloudflare environment):
+
+1. [Sign up for a Cloudflare account](https://dash.cloudflare.com/sign-up) if you don't have one already
+2. Fork this repository to your own GitHub account
+   - Cloudflare also supports GitLab as a git provider
+3. Follow [the cloudflare guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to connect your new repository to your Cloudflare account
 
 # Going beyond 🚀
 
@@ -93,27 +105,13 @@ This application largely has 3 modes:
 - Preview (deployments used by PR previews)
 - Dev (running locally on a dev machine)
 
-1. When creating your own infrastructure, you'll need to start by deciding how you want to interact with it in each of these different modes. For example, if you're connecting to an [S3 bucket on AWS](https://aws.amazon.com/s3/), you might want a dev bucket, a preview bucket, and a production bucket.
-1. If it's infrastructure being accessed via the BE API:
+When creating your own resource, you'll need to start by deciding how you want to interact with it in each of these different modes. For example, if you're connecting to an [S3 bucket on AWS](https://aws.amazon.com/s3/), you might want a dev bucket, a preview bucket, and a production bucket. 
 
-   1. You should update `wrangler.toml`. This can mean:
-
-      - Adding new Cloudflare infrastructure to `.env.{mode}`. See below for an example
-      - Adding new variables to `.env.{mode}.vars`
-      - [Adding new secrets via the wrangler CLI](https://developers.cloudflare.com/workers/configuration/secrets/)
-
-   1. Next, you'll need to update the environment type in `api/env.ts`
-
-      - Adding new Cloudflare infrastructure to `.env.{mode}`
-      - Adding new variables to `.env.{mode}.vars`
-      - [Adding new secrets via the wrangler CLI](https://developers.cloudflare.com/workers/configuration/secrets/)
-
-1. If it's an API interacted with directly by the FE (such as an authentication provider), you'll need to update `.env.{mode}`
-1.
+This guide is not going to help you deploy / manage your custom resource(s), but we do recommend that you consider the 3 modes listed above when doing so. Instead, this guide will walk you through how to connect them to this project, and assumes you already know how to deploy / manage your resource(s). 
 
 ### Adding a Cloudflare resource
 
-If what you need is already covered by Cloudflare's offerrings, that's great! You can just extend the `wranger.toml` file in this project, along with adding the new infrastructure to `./api/env.ts`, as per the wranger docs.
+If what you need is already covered by Cloudflare's offerrings, that's great! You can just extend the `wranger.toml` file in this project, along with adding the resource to `./api/env.ts`, as per the wranger docs.
 
 You can find a lot of Cloudflare's listed offerings, as well as how to add them to a `Pages` project in the [Bindings docs](https://developers.cloudflare.com/pages/functions/bindings/).
 
@@ -182,7 +180,7 @@ For example, if you want a SQL database, you could use Cloudflare's [D1](https:/
 
 ### Adding a cloudflare integration
 
-A limited number of 3rd parties have Cloudflare integrations. These cloud providers can add support for their infrastructure via the Cloudflare dashboard. You'll need to follow their documentation to find out the steps for this process. [Check out the Cloudflare docs here](https://developers.cloudflare.com/workers/configuration/integrations/).
+A limited number of 3rd parties have Cloudflare integrations. These cloud providers can add support for their offerings via the Cloudflare dashboard. You'll need to follow their documentation to find out the steps for this process. [Check out the Cloudflare docs here](https://developers.cloudflare.com/workers/configuration/integrations/).
 
 If you're using a database, you'll probably want a relevant [database driver](https://developers.cloudflare.com/workers/databases/connecting-to-databases/).
 
@@ -342,14 +340,19 @@ If you're accessing them from your FE, here's how to set it up:
 
 For secret values that you don't want in source control or Cloudflare logs (such as API keys), you should use [Cloudflare secrets](https://developers.cloudflare.com/workers/configuration/secrets/)
 
-### Adding a non-cloudflare resource
+### Adding non-cloudflare resource(s)
 
-Because your BE infrastructure is outside of Cloudflare, you'll need to set up your own CI/CD scripts to deploy to the relevant infrastructure provider(s). Unfortunately, you'll have to figure out how to deploy it yourself, as we cannot provide a guide for you on interacting with your own infrastructure.
+Because it is outside of Cloudflare, you'll need to set up your own CI/CD scripts to deploy to the relevant provider(s). Unfortunately, you'll have to figure out how to deploy it yourself, as we cannot provide a guide for you on interacting with your own resources.
 
 That said, we do make the following recommendations:
 
-- Create a single "preview" environment rather than creating a new environment each time. This avoids the additional complexity that comes from needing to clean up your custom infrastructure for all preview deployments.
-- Keep the variables that Cloudflare will need consistent. If they're dynamic (e.g. they change on every deployment), you'll likely need to opt-out of Cloudflare's built-in `git` integration and use [wrangler deploy](https://developers.cloudflare.com/pages/get-started/direct-upload/#deploy-your-assets) instead, so that you can inject any generated values from your infrastructure into the Cloudflare `wrangler.toml` file
+- Consider running a clean up for "preview" mode deployment's resource(s) when their PRs are merged. This avoids leaving lots of unnecessary infrastructure lying around
+- Make sure that "preview" deployments can be made in parallel. It's likely that multiple PRs will exist concurrently, so you'll need to support having multiple "preview" deployments running side-by-side
+- Consider the cost of "preview" deployments. If you can't scale to zero, you might want a much smaller version of your service than the production version (such as less RAM, less CPU, etc.)
+- Consider managing your custom resource(s) in a separate repository, with a single deployment each for development, preview, and production environments, particularly if it's not likely to need changes to it to be deployed at the same time as changes to this project
+- Keep the variables that Cloudflare will need consistent (e.g. all preview releases use the same variable values). If they're dynamic (e.g. they change on every PR deployment), you'll likely need to opt-out of Cloudflare's built-in `git` integration and use [wrangler deploy](https://developers.cloudflare.com/pages/get-started/direct-upload/#deploy-your-assets) instead, so that you can inject any generated values from your resource(s) into the Cloudflare `wrangler.toml` file before the app is deployed to Cloudflare
+
+Once you've got the resource(s) deploying, check out the [integration](#interacting-with-an-existing-api--service) section to integrate this project with it.
 
 ### Hosting somewhere else
 
