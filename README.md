@@ -65,7 +65,7 @@ With that said, if you believe another cloud provider offers a better alternativ
 
 ### Using NodeJS instead
 
-If "scale to zero" doesn't matter to you, you don't mind losing the ability to have preview environments that last forever, or you just don't want to use Cloudflare, a simple NodeJS instance might be a better fit for you. A NodeJS server that runs tRPC for `/api` endpoints and static files for the rest gets a great deal of the same benefits as this repository does, but without the need for Cloudflare. If this sounds like a perfect fit for you, you might want to check out Vite's [middleware mode](https://vitejs.dev/config/server-options.html#server-middlewaremode) and the [tRPC Express adapter](https://trpc.io/docs/server/adapters/express).
+If "scale to zero" doesn't matter to you, you don't mind losing the ability to have preview environments that last forever, or you just don't want to use Cloudflare, a simple NodeJS instance might be a better fit for you. A NodeJS server that runs tRPC for `/api` endpoints and static files for the rest gets a great deal of the same benefits as this repository does, but without the need for Cloudflare. If this sounds like a perfect fit for you, you should check out Vite's [middleware mode](https://vitejs.dev/config/server-options.html#server-middlewaremode) and the [tRPC Express adapter](https://trpc.io/docs/server/adapters/express).
 
 # Running on your local machine
 
