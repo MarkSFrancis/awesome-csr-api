@@ -1,4 +1,4 @@
-# Awesome CSR DX
+# Awesome CSR + API
 
 This repo is an attempt to create the best DX possible for React apps that have a BFF API (backend for frontend API - an API that only exists to serve this particular web app), but do not need SSR (server-side rendering). Such web apps are usually those that require authentication to access any part of the site. Examples can include B2B web apps, internal tools, or private data entry web apps.
 
@@ -344,9 +344,10 @@ For secret values that you don't want in source control or Cloudflare logs (such
 
 ### Adding a non-cloudflare resource
 
-Because your BE infrastructure is outside of Cloudflare, you'll need to set up your own CI/CD scripts to deploy to the relevant infrastructure provider(s). Unfortunately, you'll have to figure out how to deploy it yourself, as we cannot provide a guide for you on interacting with your own infrastructure. 
+Because your BE infrastructure is outside of Cloudflare, you'll need to set up your own CI/CD scripts to deploy to the relevant infrastructure provider(s). Unfortunately, you'll have to figure out how to deploy it yourself, as we cannot provide a guide for you on interacting with your own infrastructure.
 
 That said, we do make the following recommendations:
+
 - Create a single "preview" environment rather than creating a new environment each time. This avoids the additional complexity that comes from needing to clean up your custom infrastructure for all preview deployments.
 - Keep the variables that Cloudflare will need consistent. If they're dynamic (e.g. they change on every deployment), you'll likely need to opt-out of Cloudflare's built-in `git` integration and use [wrangler deploy](https://developers.cloudflare.com/pages/get-started/direct-upload/#deploy-your-assets) instead, so that you can inject any generated values from your infrastructure into the Cloudflare `wrangler.toml` file
 
