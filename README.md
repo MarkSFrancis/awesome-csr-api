@@ -65,8 +65,9 @@ If you believe another cloud provider offers a better alternative, we encourage 
 
 1. Clone the project onto your local machine
 1. Open a shell at the root of the project and run `npm i`
-1. Run `npm run dev`
-1. Open another shell at the root of the project and run `npx wrangler pages dev`
+1. Run `npx wrangler pages dev`
+1. Open another shell at the root of the project and run `npm run dev`
+1. Once the dev server is running, whilst that shell is focused, press "o" and "Enter" to open the project in your browser
 
 # Deploying to Cloudflare
 
@@ -77,9 +78,9 @@ If you believe another cloud provider offers a better alternative, we encourage 
 If you want to deploy from your own repository (or to your own Cloudflare environment):
 
 1. [Sign up for a Cloudflare account](https://dash.cloudflare.com/sign-up) if you don't have one already
-2. Fork this repository to your own GitHub account
+1. Fork this repository to your own GitHub account
    - Cloudflare also supports GitLab as a git provider
-3. Follow [the cloudflare guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to connect your new repository to your Cloudflare account
+1. Follow [the cloudflare guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to connect your new repository to your Cloudflare account
 
 # Going beyond 🚀
 
