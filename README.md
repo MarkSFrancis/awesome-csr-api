@@ -90,7 +90,7 @@ For going further than the scope of this demo, the complexity will depend on wha
 
 If you want to extend just the UI / FE, you can use all the normal react tooling you're used to. You're free to add any packages, dependencies, etc, as long as they can be bundled and can run in a browser. Have fun!
 
-If you'd like, you can even rip out all of what we've done here.
+If you'd like, you can even rip out the FE we have here, and the project will still deploy + operate as expected.
 You'll need:
 
 - A `tRPC` client
