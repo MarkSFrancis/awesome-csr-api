@@ -19,6 +19,8 @@ APP_NAME = 'CSR dev'
 
 [env.preview.vars]
 APP_NAME = 'CSR preview'
+CF_PAGES_BRANCH = 'preview'
 
 [env.production.vars]
 APP_NAME = 'CSR production'
+CF_PAGES_BRANCH = 'production'
