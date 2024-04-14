@@ -69,7 +69,7 @@ If "scale to zero" doesn't matter to you, you don't mind losing the ability to h
 
 # Running on your local machine
 
-## Prerequisites:
+## Prerequisites
 
 - Git
 - NodeJS
