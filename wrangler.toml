@@ -15,12 +15,13 @@ port = 8787
 # This should not be used for secrets (values you don't want in source control). For secrets, use `.dev.vars`
 # https://developers.cloudflare.com/workers/configuration/secrets/
 
+APP_MODE = 'development'
 APP_NAME = 'CSR dev'
 
 [env.preview.vars]
 APP_NAME = 'CSR preview'
-CF_PAGES_BRANCH = 'preview'
+APP_MODE = 'preview'
 
 [env.production.vars]
+APP_MODE = 'production'
 APP_NAME = 'CSR production'
-CF_PAGES_BRANCH = 'production'
