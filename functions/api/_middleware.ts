@@ -1,7 +1,5 @@
 export const onRequest: PagesFunction = async (context) => {
   const req = context.request as Request;
-  const url = new URL(req.url);
-  if (!url.pathname.startsWith("/api/")) return context.next();
 
   const auth = req.headers.get("Authorization");
 
