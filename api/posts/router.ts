@@ -24,12 +24,6 @@ export const postsRouter = router({
       return post;
     }),
   getAll: publicProcedure.query(async () => {
-    await new Promise((res) => {
-      setTimeout(() => {
-        res(void 0);
-      }, 1000);
-    });
-
     return db.posts;
   }),
 });
