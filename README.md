@@ -31,6 +31,7 @@ This repository sets out to demonstrate that there is a better way. It's time th
 - Authentication by default on all API endpoints. You're probably using CSR to protect non-public data, so authentication is treated as a first-class citizen
 - Access to a cloud provider's full resource offerings for advanced scenarios, such as SQL databases, custom queues, key-value stores, and more, with Typescript support for interacting with all those custom resources
 - Easy to add custom metrics / insights to (via [Cloudflare's analytics engine](https://developers.cloudflare.com/pages/functions/bindings/#analytics-engine))
+- `404` status code responses when trying to invoke API endpoints that don't exist, whilst still serving the standard CSR `index.html` fallback for any non-API route requests
 
 ## Things that aren't included here
 
