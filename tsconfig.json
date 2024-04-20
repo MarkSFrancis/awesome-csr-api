@@ -21,15 +21,5 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    // API types for Cloudflare
-    // https://developers.cloudflare.com/pages/functions/typescript/
-    "types": [
-      "@cloudflare/workers-types"
-    ]
-  },
-  "references": [
-    {
-      "path": "./tsconfig.node.json"
-    }
-  ]
+  }
 }

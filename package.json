@@ -4,26 +4,26 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "tsx watch --ignore ./public --ignore ./src app.ts",
     "build": "tsc && vite build --mode ${APP_MODE:-development}",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "kill-api": "fuser -k 8787/tcp"
+    "preview": "vite preview"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.36.1",
     "@tanstack/react-router": "^1.27.0",
     "@trpc/react-query": "^10.45.2",
     "@trpc/server": "^10.45.2",
+    "@types/node": "^20.12.7",
     "immer": "^10.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "zod": "^3.22.4"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20240405.0",
     "@tanstack/router-devtools": "^1.27.0",
     "@tanstack/router-vite-plugin": "^1.26.21",
+    "@types/express": "^4.17.21",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
@@ -33,8 +33,10 @@
     "eslint": "^8.57.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
+    "express": "^4.19.2",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.3",
+    "tsx": "^4.7.2",
     "typescript": "^5.2.2",
     "vite": "^5.2.0"
   }
