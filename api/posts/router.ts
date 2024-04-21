@@ -1,4 +1,4 @@
-import { procedure, router } from "../trpc";
+import { procedure, router } from "../trpc.js";
 import { z } from "zod";
 
 let id = 0;

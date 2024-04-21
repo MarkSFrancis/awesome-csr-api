@@ -1,9 +1,8 @@
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
-import { appRouter } from "./api/router";
+import { appRouter } from "./api/router.js";
 import express from "express";
-import { createServer as createViteServer } from "vite";
-import react from "@vitejs/plugin-react";
-import { TanStackRouterVite } from "@tanstack/router-vite-plugin";
+import { dirname, join, resolve } from "path";
+import { fileURLToPath } from 'url';
 
 async function createServer() {
   const app = express();
@@ -22,17 +21,31 @@ async function createServer() {
     })
   );
 
-  const vite = await createViteServer({
-    server: { middlewareMode: true },
-    plugins: [react(), TanStackRouterVite()],
-    appType: "spa", // don't include Vite's default HTML handling middlewares
-  });
+  if (process.env.NODE_ENV === "production") {
+    const __filename = fileURLToPath(import.meta.url)
+    const __dirname = dirname(__filename);
+    const spaFiles = join(__dirname, "..", "client");
 
-  app.use(vite.middlewares);
+    app.use(express.static(spaFiles));
+    app.get("*", (_req, res) => {
+      res.sendFile(resolve(spaFiles, "index.html"));
+    });
+  } else {
+    const { createServer: createViteServer } = await import("vite");
+    const { default: react } = await import("@vitejs/plugin-react");
+    const { TanStackRouterVite } = await import("@tanstack/router-vite-plugin");
 
-  app.listen(8787);
+    const vite = await createViteServer({
+      server: { middlewareMode: true },
+      plugins: [react(), TanStackRouterVite()],
+    });
 
-  console.log(`Listening on port 8787`);
+    app.use(vite.middlewares);
+  }
+
+  const port = process.env.PORT || 8787;
+  app.listen(port);
+  console.log(`Listening on port ${port}`);
 }
 
 createServer();

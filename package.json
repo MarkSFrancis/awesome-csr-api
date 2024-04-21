@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsx watch --ignore ./public --ignore ./src app.ts",
-    "build": "tsc && vite build --mode ${APP_MODE:-development}",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "dev": "tsx watch --ignore ./public --ignore ./src --env-file=.env app.ts",
+    "build:server": "tsc -p tsconfig.node.json",
+    "build:client": "vite build --mode ${APP_MODE:-development} --outDir dist/client",
+    "start": "NODE_ENV=production node dist/server/app.js",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
   },
   "dependencies": {
     "@tanstack/react-query": "^4.36.1",
@@ -31,6 +32,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
     "eslint": "^8.57.0",
+    "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
     "express": "^4.19.2",

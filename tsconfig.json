@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
+    "esModuleInterop": true,
     "useDefineForClassFields": true,
     "lib": [
       "esnext",
@@ -11,7 +12,6 @@
     "skipLibCheck": true,
     /* Bundler mode */
     "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
@@ -20,6 +20,6 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   }
 }

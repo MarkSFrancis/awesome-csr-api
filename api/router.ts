@@ -1,5 +1,5 @@
-import { postsRouter } from "./posts/router";
-import { procedure, router } from "./trpc";
+import { postsRouter } from "./posts/router.js";
+import { procedure, router } from "./trpc.js";
 import { z } from "zod";
 
 export const appRouter = router({
