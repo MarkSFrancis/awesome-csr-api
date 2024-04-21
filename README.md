@@ -26,22 +26,24 @@ This repository sets out to demonstrate that there is a better way. It's time th
 ## Especially for CSR + API
 
 - End-to-end type safety, across the FE and BE. If you rename an API endpoint or change its schema, you'll get instant TS warnings in the front-end. You'll also get autocomplete for the API endpoint's body schema, available API endpoints, etc. You can even use your IDE's "Go to definition" when using an API endpoint from the FE, and it'll navigate to the API endpoint on the BE for you
-- You only pay for `/api` requests, and even then, the first 10,000,000 API requests each month are free on the $5 per month Standard plan, or 100,000 each month on the Free plan. [Check out the Cloudflare workers pricing here](https://developers.cloudflare.com/workers/platform/pricing/#workers)
-- Automatic CI/CD deployments, including automatic preview environments for PRs, which will never expire, at no additional cost
 - Authentication by default on all API endpoints. You're probably using CSR to protect non-public data, so authentication is treated as a first-class citizen
-- Access to a cloud provider's full resource offerings for advanced scenarios, such as SQL databases, custom queues, key-value stores, and more, with Typescript support for interacting with all those custom resources
-- Easy to add custom metrics / insights to (via [Cloudflare's analytics engine](https://developers.cloudflare.com/pages/functions/bindings/#analytics-engine))
 - `404` status code responses when trying to invoke API endpoints that don't exist, whilst still serving the standard CSR `index.html` fallback for any non-API route requests
 
 ## Things that aren't included here
 
+- Cloud deployment
+  - We'd recommend using any docker-host service that allows you to host NodeJS processes, or a VPS of your choosing. You could also self-host if that's your thing
+- CI/CD
+  - Because we don't know how you're planning to host this project, we can't really help you with CI/CD
+- Serverless / pay per request
+  - This model of hosting is specifically designed for people who want to self-host, which currently isn't well defined for serverless hosting models. Check your hosting provider's details for how they price requests
 - Image optimisation
   - We'd recommend checking out the Vite plugin [Vite Image Optimizer](https://github.com/FatehAK/vite-plugin-image-optimizer) for this
 - OAuth
   - Check out the docs for your OAuth provider to find out how to add support for it.
-  - We've provided a basic auth example which uses static authorization headers. Check out the code in `functions/api/_middleware.ts` (server-side) and `src/api/ApiProvider.tsx` (client-side)
+  - We've provided a basic auth example which uses static authorization headers. Check out the code in `api/createContext.ts` (server-side) and `src/api/ApiProvider.tsx` (client-side)
 - Role-based access control (RBAC)
-  - Because `functions/api/_middleware.ts` can enrich the request context, you can add any extra information about the user you'd like (such as what roles they have). [Check out the Cloudflare middleware docs here](https://developers.cloudflare.com/pages/functions/middleware/)
+  - Because `api/createContext.ts` can enrich the request context, you can add any extra information about the user you'd like (such as what roles they have)
   - The exact implementation will depend on how granular your web app's permissions model is, we've left it as out-of-scope for this repository
 
 # Technologies we use
@@ -53,25 +55,22 @@ This repository sets out to demonstrate that there is a better way. It's time th
 - [Tailwind](https://tailwindcss.com/)
 - [tRPC](https://trpc.io/)
 - [@tanstack/react-query](https://tanstack.com/query)
-- [Cloudflare Pages](https://developers.cloudflare.com/pages)
 
-## Why Cloudflare?
+## Why NodeJS?
 
-We believe Cloudflare pages is the best way to host a CSR + API application.
+NodeJS is a tried and true method for hosting and is supported by virtually any cloud provider, or even self-hosting. Sometimes a simple docker container chucked into VPS is all you need. Or perhaps you want a really predictable and easy to manage spend. If you'd rather have downtime than a sudden high bill, a classic NodeJS instance can be a better way.
 
-- Simple but effective git integration
+Simpler is better than overcomplicated, and NodeJS is one of the simplest ways to host.
+
+### Using Cloudflare instead
+
+We believe Cloudflare pages is the best way to host a CSR + API application. If you're not that bothered about the portability and freedom to self-host that you get from running plain old NodeJS, here's what you'd get by switching to Cloudflare:
+
+- Automated CI/CD, including preview environments on PR
 - Scale to zero
 - Very cheap hosting, with it being easy to set up a proof of concept to show your boss at work for free
 - Already a well-respected brand in the enterprise space, where many of the B2B apps that this repository is well-suited for are being created
 - Enough cloud offerings to cover most common web application's needs
-
-With that said, if you believe another cloud provider offers a better alternative, we encourage you to build a proof of concept with it and let us know!
-
-### Using NodeJS instead
-
-If "scale to zero" doesn't matter to you, you don't mind losing the ability to have preview environments that last forever, or you just don't want to use Cloudflare, a NodeJS process might be a better fit for you, which you could run on almost any cloud provider you like, or even self-host. This project can be horizontally (multiple instances running in parallel to handle traffic) or vertically scaled (bigger CPU + RAM on your NodeJS instance(s)), so you can use a load balancer and a set of scaling rules to handle virtually any volume of traffic. 
-
-Such a server that runs tRPC for `/api` endpoints and serves static files for the rest gets a great deal of the same benefits as this repository does, but without the need for Cloudflare. If this sounds like a perfect fit for you, you should check out Vite's [middleware mode](https://vitejs.dev/config/server-options.html#server-middlewaremode) and the [tRPC Express adapter](https://trpc.io/docs/server/adapters/express).
 
 # Running on your local machine
 
@@ -84,22 +83,22 @@ Such a server that runs tRPC for `/api` endpoints and serves static files for th
 
 1. Clone the project onto your local machine
 1. Open a shell at the root of the project and run `npm i`
-1. Run `npx wrangler pages dev`
-1. Open another shell at the root of the project and run `npm run dev`
-1. Once the dev server is running, whilst that shell is focused, press "o" and "Enter" to open the project in your browser
-
-# Deploying to Cloudflare
-
-1. Push to `main`. That's it!
+1. Run `npm run dev`
+1. Once the dev server is running, open [http://localhost:8787](http://localhost:8787) in your browser
 
 ## Setting up deployment
 
-If you want to deploy from your own repository (or to your own Cloudflare environment):
+If you want to deploy to your own environment, you'll need to configure your own CI/CD. The process for deploying is similar to any other deployment on NodeJS. You'll need to perform these steps as a minimum:
 
-1. [Sign up for a Cloudflare account](https://dash.cloudflare.com/sign-up) if you don't have one already
-1. Fork this repository to your own GitHub account
-   - Cloudflare also supports GitLab as a git provider
-1. Follow [the cloudflare guide](https://developers.cloudflare.com/pages/get-started/git-integration/) to connect your new repository to your Cloudflare account
+1. Run an install `npm ci`
+1. Build the client + server applications (`npm run build:client` + `npm run build:server`). You can run these steps in parallel
+1. Copy the contents of the `dist` folder, `node_modules` folder, and `package.json` file into your production environment
+1. Run the app with `NODE_ENV=production npm start`
+
+We recommend considering a development, preview, and production environment as follows:
+- Development = running on a developer's local machine as they work on features
+- Preview = preview builds that are deployed for each PR. You should consider automatically tearing these down when a PR is merged or after a certain amount of time has passed. You should set these up in such a way where multiple preview environments can co-exist, in order to support concurrent PRs
+- Production = anything that's merged into `main`
 
 # Going beyond 🚀
 
@@ -113,275 +112,14 @@ If you'd like, you can even rip out the FE we have here, and the project will st
 You'll need:
 
 - A `tRPC` client
-- Something that emits static build output to `/dist`
+- Something that supports `vite`
 
-Most of CSR tools out there today already support both of these things. For example, you could use NextJS with [a static `export` configuration](https://nextjs.org/docs/pages/building-your-application/deploying/static-exports), though you'll need to override the output directory from `/out` to `/dist`.
+Most JS libraries out there today already support both of these things. For example, you could use `react-router-dom` instead of `@tanstack/router`. Just update the vite plugins in `app.ts`, then update the routes to switch from `@tanstack/router` to `react-router-dom` components, and the app should work exactly as expected, with your new routing library all plugged in and ready to go!
 
 ## Extending the BE
 
-This application largely has 3 modes:
+As this is just a NodeJS app, you can use any packages as you normally would on NodeJS. The build is not minified for production, so unlike when deploying for serverless environments, you can even use packages that don't support minification. 
 
-- Production (the production deployment)
-- Preview (deployments used by PR previews)
-- Dev (running locally on a dev machine)
+We do recommend that for any new API endpoints, you seek to continue to extend `tRPC`. But for anything beyond that, you can still use any standard NodeJS features. 
 
-When creating / connecting to your own resource(s), you'll need to start by deciding how you want to interact with it in each of these different modes. For example, if you're connecting to an [S3 bucket on AWS](https://aws.amazon.com/s3/), you might want a dev bucket, a preview bucket, and a production bucket. 
-
-This guide is not going to help you deploy / manage your custom resource(s), but we do recommend that you consider the 3 modes listed above when doing so. Instead, this guide will walk you through how to connect them to this project, and assumes you already know how to deploy / manage your custom resource(s). 
-
-### Adding a Cloudflare resource
-
-If what you need is already covered by Cloudflare's offerrings, that's great! You can just extend the `wranger.toml` file in this project, along with adding the resource to `./api/env.ts`, as per the wranger docs.
-
-You can find a lot of Cloudflare's listed offerings, as well as how to add them to a `Pages` project in the [Bindings docs](https://developers.cloudflare.com/pages/functions/bindings/).
-
-For example, if you want a SQL database, you could use Cloudflare's [D1](https://developers.cloudflare.com/pages/functions/bindings/#d1-databases) offering.
-
-#### Example: Adding a Cloudflare D1 database
-
-1. Start by logging into Cloudflare with `npx wrangler login`
-1. Then, add your database with `npx wrangler d1 create prod-d1-tutorial`. Make sure to note down the database's ID
-1. Then run it again to create a 2nd DB for preview `npx wrangler d1 create preview-d1-tutorial`
-1. Then run it for the 3rd time to create a final DB for dev `npx wrangler d1 create dev-d1-tutorial`
-1. Next, add it to the `wrangler.toml` file:
-
-   ```toml
-   [env.preview]
-   d1_databases = [
-     { binding = "DB", database_name = "prod-d1-tutorial", database_id = "<UUID1>" },
-   ]
-
-   [env.production]
-   d1_databases = [
-       { binding = "DB", database_name = "preview-d1-tutorial", database_id = "<UUID2>" },
-   ]
-
-   [env.development]
-   d1_databases = [
-       { binding = "DB", database_name = "dev-d1-tutorial", database_id = "<UUID2>" },
-   ]
-   ```
-
-1. You'll then need to update the `api/env.ts` file with the new database, like so:
-
-   ```ts
-   export interface Env {
-     APP_NAME: string;
-     DB: D1Database;
-   }
-   ```
-
-1. Now you can use it in your tRPC endpoints.
-
-   Here's an example imagining a `postsRouter` that interacts with a `"Posts"` table:
-
-   ```ts
-   import { procedure, router } from "../trpc";
-   import { z } from "zod";
-
-   type Post = {
-     id: number;
-     title: string;
-   };
-
-   export const postsRouter = router({
-     create: procedure
-       .input(z.object({ title: z.string() }))
-       .mutation(async ({ ctx, input }) => {
-         const ps = ctx.DB.prepare('INSERT INTO "Posts" (title) VALUES (?)');
-         await ps.bind(input.title).run();
-       }),
-     getAll: procedure.query(async (req) => {
-       const ps = req.ctx.DB.prepare('SELECT * FROM "Posts"');
-       const data = await ps.all<Post>();
-
-       return data.results;
-     }),
-   });
-   ```
-
-### Adding a cloudflare integration
-
-A limited number of 3rd parties have Cloudflare integrations. These cloud providers can add support for their offerings via the Cloudflare dashboard. You'll need to follow their documentation to find out the steps for this process. [Check out the Cloudflare docs here](https://developers.cloudflare.com/workers/configuration/integrations/).
-
-If you're using a database, you'll probably want a relevant [database driver](https://developers.cloudflare.com/workers/databases/connecting-to-databases/).
-
-### Interacting with an existing API / service
-
-The simplest way to interact with most APIs is to just use `fetch`.
-
-#### Example: Fetching data from a public API
-
-For example, if you're fetching a list of todos from a 3rd party API, you might write some code like this:
-
-```ts
-import { procedure, router } from "../trpc";
-
-export const todosRouter = router({
-  getAll: procedure.query(async () => {
-    const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-
-    // ⚠️ Don't forget to check for `response.ok` if appropriate
-    if (!response.ok) throw new Error("Something went wrong fetching todos");
-
-    const data: {
-      userId: number;
-      id: number;
-      title: string;
-      completed: boolean;
-    }[] = await response.json();
-
-    return data;
-  }),
-});
-```
-
-If you want to use an SDK that isn't simply a `fetch` wrapper, you might run into some difficulties due to how Cloudflare doesn't use NodeJS as its runtime. You can find out more about this in [Cloudflare's external services docs](https://developers.cloudflare.com/workers/configuration/integrations/external-services/)
-
-#### Configuring the environment
-
-For non-secret values, you can just use the environment variables.
-
-##### Accessing from the BE
-
-If you're accessing them from your BE, here's how to set it up:
-
-1. Open `wrangler.toml`
-1. Choose a name for your value (such as `OAUTH_URL`)
-1. For each of the `env.{mode}.vars` + `vars` sections, add the relevant values for the mode, with the name set to what you decided before
-
-   ```toml
-   # Here's an example with OAUTH_URL for each mode
-   [vars]
-   # ...
-   OAUTH_URL = 'https://development.oauth-site.com'
-
-   [env.preview.vars]
-   # ...
-   OAUTH_URL = 'https://preview.oauth-site.com'
-
-   [env.production.vars]
-   # ...
-   OAUTH_URL = 'https://production.oauth-site.com'
-   ```
-
-   If you have no dedicated values for a mode, you can re-use the values. For example, you might re-use the dev value for both `development` and `preview` modes. This is fine!
-
-   ```toml
-   [vars]
-   # ...
-   OAUTH_URL = 'https://development.oauth-site.com'
-
-   [env.preview.vars]
-   # ...
-   OAUTH_URL = 'https://development.oauth-site.com'
-
-   [env.production.vars]
-   # ...
-   OAUTH_URL = 'https://production.oauth-site.com'
-   ```
-
-1. Add the new key to your `api/env.ts` file
-
-   ```ts
-   export interface Env {
-     // ...
-     OAUTH_URL: string;
-   }
-   ```
-
-1. You can now use it in any tRPC endpoint
-
-   ```ts
-   import { procedure, router } from "../trpc";
-   import { z } from "zod";
-
-   export const oauthRouter = router({
-     getUrl: procedure.query(async (req) => {
-       return req.ctx.OAUTH_URL;
-     }),
-   });
-   ```
-
-1. If you want to know more, check out the [Cloudflare environment docs](https://developers.cloudflare.com/workers/configuration/environment-variables/#environment-variables)
-
-##### Accessing from the FE
-
-If you're accessing them from your FE, here's how to set it up:
-
-1. Choose a name for your value (such as `OAUTH_URL`)
-1. For each of the `env.{mode}` + `.env` files, add the relevant values for the mode, with the name set to `VITE_{what you decided before}`. If you don't prefix the variable with `VITE_`, it won't be included in the bundle
-
-   ```
-   # .env
-   VITE_OAUTH_URL=https://development.oauth-site.com
-   ```
-
-   ```
-   # .env.preview
-   VITE_OAUTH_URL=https://preview.oauth-site.com
-   ```
-
-   ```
-   # .env.production
-   VITE_OAUTH_URL=https://production.oauth-site.com
-   ```
-
-   If you have no dedicated values for a mode, you can re-use the values. For example, you might re-use the dev value for both `development` and `preview` modes. This is fine!
-
-   ```
-   # .env
-   VITE_OAUTH_URL=https://development.oauth-site.com
-   ```
-
-   ```
-   # .env.preview
-   VITE_OAUTH_URL=https://development.oauth-site.com
-   ```
-
-   ```
-   # .env.production
-   VITE_OAUTH_URL=https://production.oauth-site.com
-   ```
-
-1. Add the new key to your `src/vite-env.d.ts` file
-
-   ```ts
-   interface ImportMetaEnv {
-     // ...
-     readonly VITE_OAUTH_URL: string;
-   }
-   ```
-1. You can now access the value anywhere in your FE via `import.meta.env`
-   ```tsx
-   export const SignIn = () => <a href={import.meta.env.VITE_OAUTH_URL}>Sign in</a>
-   ```
-
-1. If you want to know more about this, check out the [Vite mode docs](https://vitejs.dev/guide/env-and-mode)
-
-#### Secrets
-
-For secret values that you don't want in source control or Cloudflare logs (such as API keys), you should use [Cloudflare secrets](https://developers.cloudflare.com/workers/configuration/secrets/)
-
-### Adding non-cloudflare resource(s)
-
-Because it is outside of Cloudflare, you'll need to set up your own CI/CD scripts to deploy to the relevant provider(s). Unfortunately, you'll have to figure out how to deploy it yourself, as we cannot provide a guide for you on interacting with your own resources.
-
-That said, we do make the following recommendations:
-
-- Consider running a clean up for preview mode deployment's resource(s) when their PRs are merged. This avoids leaving lots of unnecessary infrastructure lying around
-- Make sure that preview mode deployments can be made in parallel. It's likely that multiple PRs will exist concurrently, so you'll need to support having multiple preview mode deployments running side-by-side
-- Consider the cost of hosting multiple instances, particularly in preview mode. If you can't scale to zero, you might want a much smaller version of your service than the production version (such as less RAM, less CPU, etc.)
-- Consider managing your custom resource(s) in a separate repository, with a single deployment each for development, preview, and production mode, particularly if it's not likely to need changes to it to be deployed at the same time as changes to this project
-- Consider keeping the variables that Cloudflare will need consistent (e.g. all preview mode deployments use the same variable values). If they're dynamic (they change on every PR deployment), you'll likely need to opt-out of Cloudflare's built-in `git` integration and use [wrangler deploy](https://developers.cloudflare.com/pages/get-started/direct-upload/#deploy-your-assets) instead, so that you can inject any generated values from your resource(s) into the Cloudflare `wrangler.toml` file before the app is deployed to Cloudflare
-
-Once you've got the resource(s) deploying, check out the [integration](#interacting-with-an-existing-api--service) section to integrate this project with it.
-
-### Hosting somewhere else
-
-This project is not currently cloud provider agnostic. If you wish to move away from cloudflare, you might want to consider [using NodeJS instead](#using-nodejs-instead).
+We're using `express` for the top-level router, so you can add your own endpoints outside of `tRPC` there. 

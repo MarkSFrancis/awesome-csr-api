@@ -1,28 +1,13 @@
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { appRouter } from "./api/router.js";
-import express from "express";
+import express, { Express } from "express";
 import { dirname, join, resolve } from "path";
-import { fileURLToPath } from 'url';
+import { fileURLToPath } from "url";
+import { createContext } from "./api/createContext.js";
 
-async function createServer() {
-  const app = express();
-
-  app.use(
-    "/api",
-    createExpressMiddleware({
-      router: appRouter,
-      createContext() {
-        // TODO: load from .env file
-        return {
-          APP_MODE: "development",
-          APP_NAME: "CSR dev",
-        };
-      },
-    })
-  );
-
+async function createFrontend(app: Express) {
   if (process.env.NODE_ENV === "production") {
-    const __filename = fileURLToPath(import.meta.url)
+    const __filename = fileURLToPath(import.meta.url);
     const __dirname = dirname(__filename);
     const spaFiles = join(__dirname, "..", "client");
 
@@ -42,6 +27,20 @@ async function createServer() {
 
     app.use(vite.middlewares);
   }
+}
+
+async function createServer() {
+  const app = express();
+
+  app.use(
+    "/api",
+    createExpressMiddleware({
+      router: appRouter,
+      createContext,
+    })
+  );
+
+  await createFrontend(app);
 
   const port = process.env.PORT || 8787;
   app.listen(port);
