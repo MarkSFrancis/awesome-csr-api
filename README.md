@@ -91,14 +91,18 @@ We believe Cloudflare pages is the best way to host a CSR + API application. If 
 If you want to deploy to your own environment, you'll need to configure your own CI/CD. The process for deploying is similar to any other deployment on NodeJS. You'll need to perform these steps as a minimum:
 
 1. Run an install `npm ci`
-1. Build the client + server applications (`npm run build:client` + `npm run build:server`). You can run these steps in parallel
-1. Copy the contents of the `dist` folder, `node_modules` folder, and `package.json` file into your production environment
-1. Run the app with `NODE_ENV=production npm start`
+1. Build the client + server applications (`APP_MODE=production npm run build:client` + `npm run build:server`). You can run these steps in parallel
+1. Copy the contents of the `dist` folder, `node_modules` folder, `.env.*` and `.env` files, and `package.json` file into your production environment
+1. Run the app with `APP_MODE=production npm start`
 
-We recommend considering a development, preview, and production environment as follows:
+To introduce any other environments (beyond just development + production), you'll need to adjust `APP_MODE=...` to the name of the environment you want to create. Check out the [mode vite docs](https://vitejs.dev/guide/env-and-mode) for more info. You should also set the environment variable `APP_MODE` to the same value in your hosting provider, when it's running for that environment.
+
+We recommend a development, preview, and production environment as follows:
 - Development = running on a developer's local machine as they work on features
 - Preview = preview builds that are deployed for each PR. You should consider automatically tearing these down when a PR is merged or after a certain amount of time has passed. You should set these up in such a way where multiple preview environments can co-exist, in order to support concurrent PRs
 - Production = anything that's merged into `main`
+
+We do not recommend "UAT" / "Pre-prod" / "QA" / "Test" environments, as we find they introduce more friction than they remove. Your mileage may vary however, and this will depend hugely on your company and culture. If it's easier to embrace a UAT environment, go for it! You can always change your mind later. 
 
 # Going beyond 🚀
 

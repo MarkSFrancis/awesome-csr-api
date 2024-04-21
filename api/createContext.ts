@@ -18,8 +18,6 @@ export const createContext: NodeHTTPCreateContextFn<
   }
 
   return {
-    APP_MODE: "development",
-    APP_NAME: "CSR dev",
     user: {
       id: "1",
     },

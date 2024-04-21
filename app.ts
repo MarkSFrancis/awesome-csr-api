@@ -1,3 +1,4 @@
+import "./api/dotenv.js";
 import { createExpressMiddleware } from "@trpc/server/adapters/express";
 import { appRouter } from "./api/router.js";
 import express, { Express } from "express";

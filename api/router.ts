@@ -4,10 +4,8 @@ import { z } from "zod";
 
 export const appRouter = router({
   posts: postsRouter,
-  hello: procedure.input(z.string().nullish()).query(({ input, ctx }) => {
-    console.log("Responding to tRPC");
-
-    return `hello ${input ?? "world"} from ${ctx.APP_NAME}`;
+  hello: procedure.input(z.string().nullish()).query(({ input }) => {
+    return `hello ${input ?? "world"} from ${process.env.APP_NAME}`;
   }),
 });
 
